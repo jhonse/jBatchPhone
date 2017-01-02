@@ -41,13 +41,23 @@ namespace jBatchPhone.Util
                 string[] Nox = jFile.getAllDirName(ExePath + @"\bin\BignoxVMS");
                 foreach(string n in Nox)
                 {
-                    string[] saveInfo = new string[3];
+                    string[] saveInfo = new string[4];
                     DirectoryInfo folder = new DirectoryInfo(n);
                     string IPAndPort = getSimulatorIPAndPort(n, folder.Name);
                     saveInfo[0] = folder.Name;
                     saveInfo[1] = n;
+                    saveInfo[2] = IPAndPort;
+                    if (checkConnectionSimulator(IPAndPort))
+                    {
+                        saveInfo[3] = "开启";
+                    }
+                    else
+                    {
+                        saveInfo[3] = "未开启";
+                    }
                     Noxes.Add(saveInfo);
                 }
+                getAllConnectionSimulator();
             }
             return Noxes;
         }
@@ -57,11 +67,51 @@ namespace jBatchPhone.Util
 
         }
 
-        /*private static List<string> getAllConnectionSimulator()
+        /// <summary>
+        /// 获得所有开启的模拟器
+        /// </summary>
+        /// <returns></returns>
+        private static List<string> getAllConnectionSimulator()
         {
+            List<string> retValue = new List<string>();
             List<string> Connections = jCmd.init(@"D:\Install\Nox\bin\nox_adb devices");
+            foreach(string con in Connections)
+            {
+                if (con.Contains("\tdevice"))
+                {
+                    string IPAndPort = con.Substring(0,con.Length- "\tdevice".Length);
+                    if (!IPAndPort.Equals(""))
+                    {
+                        retValue.Add(IPAndPort);
+                    }
+                }
+            }
+            return retValue;
+        }
 
-        }*/
+        /// <summary>
+        /// 检查模拟器是否开启
+        /// </summary>
+        /// <param name="IPAndPort"></param>
+        /// <returns></returns>
+        private static bool checkConnectionSimulator(string IPAndPort)
+        {
+            bool retValue = false;
+            List<string> Connections = jCmd.init(@"D:\Install\Nox\bin\nox_adb devices");
+            foreach (string con in Connections)
+            {
+                if (con.Contains("\tdevice"))
+                {
+                    string _IPAndPort = con.Substring(0, con.Length - "\tdevice".Length);
+                    if(_IPAndPort == IPAndPort)
+                    {
+                        retValue = true;
+                        break;
+                    }
+                }
+            }
+            return retValue;
+        }
 
         /// <summary>
         /// 获得模拟器的IP和端口
@@ -77,9 +127,18 @@ namespace jBatchPhone.Util
                 {
                     XmlDocument xmlDoc = new XmlDocument();
                     xmlDoc.Load(dir + "/" + name + ".vbox");
-                    XmlNode VirtualBox = xmlDoc.LastChild;
-                    XmlNode Machine = VirtualBox.SelectSingleNode("Machine");
-                    return String.Empty;
+                    
+                    XmlNode Forwarding = xmlDoc.DocumentElement.FirstChild.ChildNodes[2].ChildNodes[11].ChildNodes[0].ChildNodes[1].ChildNodes[4];
+                    if(Forwarding != null)
+                    {
+                        string IP = Forwarding.Attributes["hostip"].Value;
+                        string Port = Forwarding.Attributes["hostport"].Value;
+                        return IP + ":" + Port;
+                    }
+                    else
+                    {
+                        return String.Empty;
+                    }
                 }
                 catch (Exception)
                 {

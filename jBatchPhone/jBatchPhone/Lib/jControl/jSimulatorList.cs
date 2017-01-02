@@ -28,9 +28,9 @@ namespace jBatchPhone.Lib.jControl
         {
             this._lvSimulator = new ListView();
             this._lvSimulator.Dock = DockStyle.Fill;
-            this._lvSimulator.Location = new System.Drawing.Point(0, 0);
+            this._lvSimulator.Location = new Point(0, 0);
             this._lvSimulator.Name = "Simulator";
-            this._lvSimulator.Size = new System.Drawing.Size(656, 97);
+            this._lvSimulator.Size = new Size(656, 97);
             this._lvSimulator.TabIndex = 0;
             this._lvSimulator.UseCompatibleStateImageBehavior = false;
             this._lvSimulator.View = View.Details;
@@ -41,12 +41,13 @@ namespace jBatchPhone.Lib.jControl
             ImageList imgList = new ImageList();
             imgList.ImageSize = new Size(1, 25);
             this._lvSimulator.SmallImageList = imgList;
-            this._lvSimulator.Columns.Add("模拟器名称", this._tpMain.Width / 5, HorizontalAlignment.Center);
-            this._lvSimulator.Columns.Add("模拟器路径", this._tpMain.Width / 5, HorizontalAlignment.Center);
-            this._lvSimulator.Columns.Add("IP:端口", 80, HorizontalAlignment.Center);
-            this._lvSimulator.Columns.Add("执行任务", 80, HorizontalAlignment.Center);
-            this._lvSimulator.Columns.Add("执行时间", 80, HorizontalAlignment.Center);
-            this._lvSimulator.Columns.Add("执行状态", 80, HorizontalAlignment.Center);
+            this._lvSimulator.Columns.Add("模拟器名称", 85, HorizontalAlignment.Left);
+            this._lvSimulator.Columns.Add("模拟器路径", 240, HorizontalAlignment.Left);
+            this._lvSimulator.Columns.Add("IP:端口", 120, HorizontalAlignment.Left);
+            this._lvSimulator.Columns.Add("运行状态", 80, HorizontalAlignment.Left);
+            this._lvSimulator.Columns.Add("任务名称", 80, HorizontalAlignment.Left);
+            this._lvSimulator.Columns.Add("执行时间", 80, HorizontalAlignment.Left);
+            this._lvSimulator.Columns.Add("执行状态", 80, HorizontalAlignment.Left);
             this._tpMain.Controls.Add(this._lvSimulator);
             initData();
         }
@@ -64,17 +65,15 @@ namespace jBatchPhone.Lib.jControl
             foreach(string[] d in Data)
             {
                 ListViewItem lvi = new ListViewItem();
-
                 //lvi.BackColor = Color.DarkOrange;
                 //lvi.ForeColor = Color.DarkGray;
-
                 lvi.Text = d[0];
-          
                 lvi.SubItems.Add(d[1]);
+                lvi.SubItems.Add(d[2]);
+                lvi.SubItems.Add(d[3]);
                 lvi.SubItems.Add("0");
                 lvi.SubItems.Add("0");
                 lvi.SubItems.Add("0");
-
                 this._lvSimulator.Items.Add(lvi);
             }
         }
