@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace jBatchPhone.Lib
+namespace jBatchPhone.Lib.jControl
 {
-    class jThread
+    class jLogList
     {
     }
 }

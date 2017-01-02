@@ -46,8 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lib\jBasic\jData.cs" />
+    <Compile Include="Lib\jControl\jLogList.cs" />
+    <Compile Include="Lib\jControl\jSimulatorList.cs" />
+    <Compile Include="Lib\jControl\jTaskList.cs" />
     <Compile Include="Lib\jOs.cs" />
-    <Compile Include="Lib\jThread.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +59,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\jAppium.cs" />
+    <Compile Include="Util\jCmd.cs" />
+    <Compile Include="Util\jFile.cs" />
+    <Compile Include="Util\jIni.cs" />
+    <Compile Include="Util\jNox.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -81,9 +89,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Util\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
